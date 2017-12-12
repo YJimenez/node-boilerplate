@@ -20,8 +20,8 @@ class App extends Component{
 							/>
 						}
 					/>
-					<Route exact path="/gw/:id" component={PassPage}/>
-					<Route exact path="/gw-table/:id" component={PassPageTable}/>
+					<Route exact path="/gw/:id/box-view" component={PassPage}/>
+					<Route exact path="/gw/:id/table-view" component={PassPageTable}/>
 					<Route component={NotFound}/>
 				</Switch>
 			</div>
