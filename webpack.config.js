@@ -1,10 +1,6 @@
 const webpack = require('webpack')
 const path = require('path')
 
-require.extensions['.css'] = () => {
-  return;
-};
-
 module.exports = {
 	entry: [
 		'./views/index.js',
