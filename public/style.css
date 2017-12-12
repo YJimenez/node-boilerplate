@@ -1,0 +1,46 @@
+@media (min-width:1920px) {
+}
+
+@media (max-width:720px) {
+}
+
+body{
+	padding: 5px;
+}
+
+.pass-title {
+	padding: 10px 20px;
+}
+
+.lighter{
+	font-weight: lighter;
+}
+
+.loader{
+	padding: 10px;
+}
+
+.flex-grid {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.flex-grid-item {
+	height: 230px;
+	flex-grow: 1;
+	flex-shrink: 0;
+	flex-basis: 33.3333%;
+	flex-basis: 270px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.flex-grid-item p{
+	padding: 0px 10px;
+}
+
+.flex-grid-item .button{
+	text-align: center;
+	padding: 10px;
+}

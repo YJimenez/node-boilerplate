@@ -1,0 +1,40 @@
+{
+  "name": "react-webpack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"rimraf public/bundle.js\" \"nodemon server.js --ext 'js, jsx' --exec babel-node '--presets es2015'\" \"webpack -w\" "
+  },
+  "author": "Yair Jimenez",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "concurrently": "^3.5.0",
+    "css-loader": "^0.28.7",
+    "express": "^4.15.4",
+    "nodemon": "^1.11.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-hot-loader": "^3.0.0-beta.7",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "rimraf": "^2.6.1",
+    "style-loader": "^0.19.0",
+    "webpack": "^3.5.5"
+  },
+  "dependencies": {
+    "es6-promise": "^4.1.1",
+    "isomorphic-fetch": "^2.2.1",
+    "material-ui": "^0.20.0",
+    "styled-components": "^2.2.4"
+  }
+}
