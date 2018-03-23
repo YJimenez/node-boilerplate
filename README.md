@@ -1,6 +1,7 @@
-# Görli Pass #
+# AM Test Cases User Interface  #
 
-# Server side render 
+# Server side render
+
 The web application is built with:
 - [Node.js](https://nodejs.org/en/)
 - [Express](http://expressjs.com/)
@@ -8,6 +9,8 @@ The web application is built with:
 - [ReactRouter v4](https://reacttraining.com/react-router/web/guides/philosophy)
 - [Webpack 2](https://webpack.js.org/)
 - [Babel](https://babeljs.io/)
+- [Socket.io](https://socket.io/)
+- [Mongodb](https://www.mongodb.com)
 
 ## Run App
 
@@ -18,7 +21,8 @@ $ npm run start
 
 ## More tools
 
-	- Material-ui
+	- Bootstrap
 	- Nodemon
 	- Concurrently
 	- Rimraf
+	- Jquery
