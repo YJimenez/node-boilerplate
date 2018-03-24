@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { BarLoader } from 'react-spinners';
 import { subscribeToTimer } from './socketio';
 
-
-
 export default class Home extends Component {
 
 	constructor(props) {
@@ -92,7 +90,10 @@ export default class Home extends Component {
 				method: 'POST',
 				headers: {"Content-Type": "application/json"}
 			})
-			.then( res => res.json() );
+			.then( res => res.json() )
+			.then( data => {
+					window.open("./endpoint.json");
+			});
 	}
 
 	fetchOneCaseParams(e, name){
@@ -145,7 +146,7 @@ export default class Home extends Component {
 						<table className="table table-bordered">
 							<thead>
 								<tr>
-									<th>Titulo de Rama</th>
+									<th>Titulo</th>
 									<th>Opcion 1</th>
 									<th>Opcion 2</th>
 									<th className="col-sm-3"></th>

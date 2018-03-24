@@ -85,7 +85,7 @@ app.post('/createEndpoint', (req, res) => {
 						};
 								console.log("File has been created");
 						});
-						
+
 						res.send(JSON.stringify({ result }))
 				});
 				db.close();
@@ -121,7 +121,7 @@ app.get('*', function(req, res){
 
 		let htmlFrame = `<html>
 				<head>
-					<title>AM Test Cases</title>
+					<title>Hommies Rules</title>
 					<link rel='stylesheet' href='/style.css' />
 					<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 					<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -142,7 +142,7 @@ app.get('*', function(req, res){
 
 })
 
-const PORT = 8085;
+const PORT = 8000;
 const PORT_IO = 8082;
 io.listen(PORT_IO);
 app.listen(PORT, () => {
