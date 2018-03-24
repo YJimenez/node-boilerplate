@@ -12,15 +12,12 @@ const io = require('socket.io')()
 var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://localhost:27017/';
 
-var shell = require('shelljs');
 var fs = require('fs');
 
 var bodyParser = require('body-parser')
 app.use( bodyParser.json() )
 app.use( bodyParser.urlencoded({ extended: true }) )
 app.use( express.static('public') )
-
-require('events').EventEmitter.prototype._maxListeners = 0;
 
 io.on('connection', (socket) => {
 		console.log("Socket connected");
@@ -32,104 +29,67 @@ io.on('connection', (socket) => {
 
 });
 
-app.post('/runTestCases', (req, res) => {
-
-		const variables = [
-				'-DconnUiName=TC-' + Date.now(),
-				'-Dbrowser=chrome',
-				'-Dheadless=' + false,
-				'-Denvironment=' + req.body.environment,
-				'-Dlocale=' + req.body.storefront,
-				'-DcodeShare=' + req.body.codeShare,
-				'-Dparted=' + req.body.origin,
-				'-Darrived=' + req.body.destination
-		];
-
-		const { spawn } = require('child_process');
-
-		var mvncmd = "mvn clean test -Dtest=" + req.body.testType +
-		" -DargLine='" + variables.join(' ').toString() + "'";
-
-		const child = spawn(mvncmd, {
-				cwd:'../navigation',
-				detached: false,
-				shell: true,
-		});
-
-		child.stdout.setEncoding('utf8')
-		child.stdout.on('data', (data) => {
-
-				const javaLog = data.split('+-=').pop().split('=-+').shift();
-				console.log("(Java Console) " + javaLog);
-
-				//if( data.indexOf("+-=") !== -1 ){
-						io.sockets.emit('timer', "(Java Console) " + data);
-				//}
-
-		});
-
-		child.stderr.on('data', (data) => {
-				console.log(`stderr: ${data}`);
-		});
-
-		child.on('close', (code) => {
-			res.send(JSON.stringify({ status: "finished"  }))
-			console.log(`child process exited with code ${code}`);
-		});
-
-});
-
-app.post('/jsonJavaResponse', (req, res) => {
+app.post('/saveData', (req, res) => {
 		console.log(req.body);
 		const testSchema = {
-			name: req.body.name,
-			params: {
-				environment: req.body.environment,
-				origin: req.body.origin,
-				destination: req.body.destination,
-				storefront: req.body.storefront,
-				codeShare: req.body.codeShare,
+			title: req.body.title,
+			options: {
+				option1: req.body.option1,
+				option2: req.body.option2,
 			},
-			response: {
-				date: req.body.date,
-				details: req.body.details
-			}
 		}
 
 		MongoClient.connect( url, ( err, db ) =>{
 				if ( err ) throw err;
-				const dbConn = db.db('AMtestCases')
-				dbConn.collection('testSchemas').insertOne(testSchema)
+				const dbConn = db.db('CBTest')
+				dbConn.collection('hommiestest').insertOne(testSchema)
 				db.close();
-				console.log("schema inserted");
+				console.log("data inserted");
 		})
 
-		/*
-			fs.writeFile("public/endpoint.json", JSON.stringify(testSchema), (err) => {
-	    if (err) {
-	        console.error(err);
-	        return;
-	    };
-			    console.log("File has been created");
-			});
-		*/
-
 		res.send(JSON.stringify({ status: "finished" }))
-		console.log(':_:_:_:_:_:_:_:_: JAVA JSON REQUEST :_:_:_:_:_:_:_:_:_:');
+		console.log(':_:_:_: JSON REQUEST :_:_:_:');
 });
 
 app.post('/getMongoData', (req, res) => {
 		MongoClient.connect( url, ( err, db ) => {
 
 				if ( err ) throw err;
-				const dbConn = db.db('AMtestCases')
+				const dbConn = db.db('CBTest')
 
-				dbConn.collection('testSchemas').find({}).sort( { "name": -1 } )
+				dbConn.collection('hommiestest').find({}).sort( { "title": -1 } )
 					.toArray( (err, result) => {
 						if ( err ) throw err;
 						res.send(JSON.stringify({ result }))
 				});
 				db.close();
+
+				console.log("Mongo data sent");
+		})
+})
+
+app.post('/createEndpoint', (req, res) => {
+		MongoClient.connect( url, ( err, db ) => {
+
+				if ( err ) throw err;
+				const dbConn = db.db('CBTest')
+
+				dbConn.collection('hommiestest').find({}).sort( { "title": -1 } )
+					.toArray( (err, result) => {
+						if ( err ) throw err;
+
+						fs.writeFile("public/endpoint.json", JSON.stringify(result), (err) => {
+						if (err) {
+								console.error(err);
+								return;
+						};
+								console.log("File has been created");
+						});
+						
+						res.send(JSON.stringify({ result }))
+				});
+				db.close();
+
 
 				console.log("Mongo data sent");
 		})
@@ -182,8 +142,8 @@ app.get('*', function(req, res){
 
 })
 
-const PORT = 8080;
-const PORT_IO = 8081;
+const PORT = 8085;
+const PORT_IO = 8082;
 io.listen(PORT_IO);
 app.listen(PORT, () => {
 		console.log('http://localhost:' + PORT);
