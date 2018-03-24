@@ -1,5 +1,3 @@
-# AM Test Cases User Interface  #
-
 # Server side render
 
 The web application is built with:
@@ -26,3 +24,4 @@ $ npm run start
 	- Concurrently
 	- Rimraf
 	- Jquery
+# node-boilerplate
